@@ -1,50 +1,32 @@
 package database;
 
+import file.DatabaseConfigLoader;
 import model.Account;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Database {
 
-    private static Database instance;
+    private static Connection instance;
 
-
-    private List<Account> accounts;
 
     private Database() {
-        accounts = new ArrayList<>();
-//        accounts.add(new Account(new User("Raha","Fayyaz","00227738" , DateFunctions.stringToDate("15-03-1998"))
-//        ,"12345","54321"));
     }
 
-    public static Database getInstance(){
+    public static Connection getInstance() throws SQLException {
         if (Objects.isNull(instance))
-            return new Database();
+            return DriverManager.getConnection(DatabaseConfigLoader.getMessage("url"),
+                    DatabaseConfigLoader.getMessage("user"),DatabaseConfigLoader.getMessage("password"));
         return instance;
     }
 
-
-
-    //register a new account by user
-
-
-
-
-    //getters
-    public List<Account> getAccountList() {
-        return accounts;
+    public static void close() throws SQLException {
+            instance.close();
     }
 
-
-    //get last 10 transactions
-
-
-    @Override
-    public String toString() {
-        return "database.Database{" +
-                "accounts=" + accounts +
-                '}';
-    }
 }
