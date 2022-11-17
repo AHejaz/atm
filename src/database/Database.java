@@ -18,15 +18,24 @@ public class Database {
     private Database() {
     }
 
-    public static Connection getInstance() throws SQLException {
-        if (Objects.isNull(instance))
-            return DriverManager.getConnection(DatabaseConfigLoader.getMessage("url"),
-                    DatabaseConfigLoader.getMessage("user"),DatabaseConfigLoader.getMessage("password"));
+    public static Connection getInstance() {
+        if (Objects.isNull(instance)) {
+            try {
+                return DriverManager.getConnection(DatabaseConfigLoader.getMessage("url"),
+                        DatabaseConfigLoader.getMessage("user"),DatabaseConfigLoader.getMessage("password"));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return instance;
     }
 
-    public static void close() throws SQLException {
+    public static void close(){
+        try {
             instance.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

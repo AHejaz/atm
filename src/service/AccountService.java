@@ -4,6 +4,7 @@ package service;
 import Exceptions.AccountNotFindException;
 import Exceptions.InvalidPasswordException;
 import Exceptions.NotFoundException;
+import dao.AccountDAO;
 import database.Database;
 import file.CsvService;
 import model.Account;
@@ -12,17 +13,24 @@ import model.User;
 import model.enums.AccountType;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.*;
 import java.util.function.Consumer;
 
 
 public class AccountService /* implements Runnable */{
 
-    private Database database = Database.getInstance();
+    private AccountDAO accountDAO ;
+
     private CsvService csvService = new CsvService();
 
+    public AccountService() {
+       accountDAO = new AccountDAO();
+    }
+
     public Optional<Account> findAccount(String cardNumber) {
-        return database.getAccountList().stream().filter(account -> account.getCard().getCardNumber().equals(cardNumber)).findFirst();
+//        return database.getAccountList().stream().filter(account -> account.getCard().getCardNumber().equals(cardNumber)).findFirst();
+        accountDAO.
     }
 
     public Account login(String cardNumber, String password) {

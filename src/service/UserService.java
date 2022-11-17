@@ -3,6 +3,7 @@ package service;
 
 import Exceptions.AgeException;
 import Exceptions.InvalidInputException;
+import dao.UserDao;
 import database.Database;
 import model.Account;
 import model.User;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
 
 public class UserService {
 
-    private Database database = Database.getInstance();
+    private UserDao userDao = new UserDao();
 
     public User createUser(String fName, String lName, String nationalCode, LocalDate bDay) {
         final User[] user = {null};
@@ -31,9 +32,9 @@ public class UserService {
     }
 
     public Optional<User> findAccountByNationalCode(String nationalCode) {
-        for (Account account : database.getAccountList()) {
-            if (account.getUser().getNationalCode().equals(nationalCode))
-                return Optional.of(account.getUser());
+        for (User user : userDao.getAll()) {
+            if (user.getNationalCode().equals(nationalCode))
+                return Optional.of(user);
         }
         return Optional.empty();
     }

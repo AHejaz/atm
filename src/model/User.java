@@ -23,7 +23,22 @@ public class User {
         this.birthday = birthday;
         this.age = LocalDate.now().getYear()-birthday.getYear();
     }
+    public User(Integer id,String name, String family, String nationalId, LocalDate birthday) {
+        this.id = id;
+        this.name = name;
+        this.family = family;
+        this.nationalCode = nationalId;
+        this.birthday = birthday;
+        this.age = LocalDate.now().getYear()-birthday.getYear();
+    }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
     public String getName() {
         return name;
@@ -37,6 +52,9 @@ public class User {
         return nationalCode;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
