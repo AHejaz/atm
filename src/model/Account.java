@@ -32,6 +32,18 @@ public class Account {
         this.card = new Card(password);
     }
 
+    public Account(Integer id, User user, String accountNumber, String password, Double balance,
+                   AccountType type, Card card, List<Transaction> transactions) {
+        this.id = id;
+        this.user = user;
+        this.accountNumber = accountNumber;
+        this.password = password;
+        this.balance = balance;
+        this.type = type;
+        this.card = card;
+        this.transactions = transactions;
+    }
+
     public Integer getId() {
         return id;
     }

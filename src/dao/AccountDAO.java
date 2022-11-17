@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class AccountDAO  implements DAO<Account>,DAOReadNationalCode<Account> {
+public class AccountDAO  implements DAO<Account>,DAOReadCardNumber<Account> {
 
     private Connection database;
 
@@ -22,7 +22,7 @@ public class AccountDAO  implements DAO<Account>,DAOReadNationalCode<Account> {
     }
 
     @Override
-    public Optional<Account> getByNationalCode(String nationalCode) {
+    public Optional<Account> getByCardNumber(String nationalCode) {
         Account account ;
         User user;
         try {

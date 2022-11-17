@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 public class Card {
+    private Integer id;
     private String cardNumber;
     private String password;
     private String cvv2;
@@ -16,6 +17,14 @@ public class Card {
         this.cvv2 = String.valueOf(random.nextInt(1000,9999));
         this.expireDate = LocalDate.now().plusYears(5);
         this.password = password;
+    }
+
+    public Card(Integer id, String cardNumber, String password, String cvv2, LocalDate expireDate) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.password = password;
+        this.cvv2 = cvv2;
+        this.expireDate = expireDate;
     }
 
     public String getCardNumber() {
