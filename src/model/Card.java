@@ -27,8 +27,24 @@ public class Card {
         this.expireDate = expireDate;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getCardNumber() {
         return cardNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getCvv2() {
+        return cvv2;
+    }
+
+    public LocalDate getExpireDate() {
+        return expireDate;
     }
 
     public boolean validation (String password){

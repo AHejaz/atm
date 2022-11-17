@@ -70,6 +70,7 @@ public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
             ps.setString(4,user.getNationalCode());
             ps.setObject(5,user.getBirthday());
             ps.setInt(6,user.getId());
+            ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
@@ -89,6 +90,7 @@ public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
             ps.setString(4,user.getNationalCode());
             ps.setObject(5,user.getBirthday());
             ps.setInt(6,user.getId());
+            ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
@@ -102,6 +104,7 @@ public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
         try {
             PreparedStatement ps = database.prepareStatement("delete from users where id=?");
             ps.setInt(1,user.getId());
+            ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
