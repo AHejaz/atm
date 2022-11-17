@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Transaction {
 
-    private Long id;
+    private Integer id;
 
     private Double amount;
 
@@ -23,12 +23,18 @@ public class Transaction {
         this.date = new Date();
     }
 
+    public Transaction(Integer id, Double amount, TransactionType transactionType, Date date) {
+        this.id = id;
+        this.amount = amount;
+        this.transactionType = transactionType;
+        this.date = date;
+    }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

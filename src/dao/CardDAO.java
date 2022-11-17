@@ -61,7 +61,7 @@ public class CardDAO implements DAO<Card>,DAOReadId<Card>{
     @Override
     public void update(Card card) {
         try {
-            PreparedStatement ps = database.prepareStatement("update cards set id=null,card_number=?,password=?,cvv2=?,expire_date=? " +
+            PreparedStatement ps = database.prepareStatement("update cards set card_number=?,password=?,cvv2=?,expire_date=? " +
                     "where id = ?");
             ps.setString(1,card.getCardNumber());
             ps.setString(2,card.getPassword());
