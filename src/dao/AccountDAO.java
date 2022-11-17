@@ -17,10 +17,15 @@ import java.util.Optional;
 
 public class AccountDAO  implements DAO<Account>,DAOReadCardNumber<Account>,DAOReadId<Account> {
 
+    private TransactionDAO transactionDAO;
+    private CardDAO cardDAO;
+
     private Connection database;
 
     public AccountDAO()  {
         database = Database.getInstance();
+        cardDAO= new CardDAO();
+        transactionDAO = new TransactionDAO();
     }
 
     @Override
