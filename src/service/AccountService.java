@@ -30,7 +30,7 @@ public class AccountService /* implements Runnable */{
 
     public Optional<Account> findAccount(String cardNumber) {
 //        return database.getAccountList().stream().filter(account -> account.getCard().getCardNumber().equals(cardNumber)).findFirst();
-        accountDAO.
+        return accountDAO.getAll().stream().filter(account -> account.getCard().getCardNumber().equals(cardNumber)).findFirst();
     }
 
     public Account login(String cardNumber, String password) {
@@ -46,7 +46,7 @@ public class AccountService /* implements Runnable */{
     public Account createAccount(User user, String password, Integer type) {
         AccountType accountType = AccountType.getAccountType(type);
         Account account = new Account(user, password, accountType);
-        database.getAccountList().add(account);
+        accountDAO.save(account);
         return account;
     }
 

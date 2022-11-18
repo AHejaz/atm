@@ -106,4 +106,21 @@ public class TransactionDAO implements DAO<Transaction> {
         }
         return transactions;
     }
+
+    public void save(List<Transaction> transactions, int id) {
+        transactions.forEach(transaction -> {
+            try {
+                PreparedStatement ps = database.prepareStatement("insert into transactions(id,amount,transaction_type," +
+                        "date,account_id) " +
+                        "values (null,?,?,?,?)");
+                ps.setDouble(1, transaction.getAmount());
+                ps.setObject(2, transaction.getTransactionType());
+                ps.setObject(3, transaction.getDate());
+                ps.setInt(4,id);
+                ps.execute();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 }

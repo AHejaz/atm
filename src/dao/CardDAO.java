@@ -110,4 +110,23 @@ public class CardDAO implements DAO<Card>,DAOReadId<Card>{
         }
         return Optional.of(card);
     }
+
+    public void save(Card card, int id) {
+        try {
+            PreparedStatement ps = database.prepareStatement("insert into cards(id,card_number,password,cvv2," +
+                    "expire_date,account_id) " +
+                    "values (null,?,?,?,?,?) ");
+            ps.setString(1,card.getCardNumber());
+            ps.setString(2,card.getPassword());
+            ps.setString(3,card.getCvv2());
+            ps.setObject(4,card.getExpireDate());
+            ps.setInt(5,id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            Database.close();
+        }
+
+    }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
+public class UserDao implements DAO<User>,DAOReadNationalCode<User>,DAOReadId<User>{
     private Connection database;
 
     public UserDao() {
@@ -63,13 +63,12 @@ public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
     public void save(User user) {
         try {
             PreparedStatement ps = database.prepareStatement("insert  into users(id,name,family,age,national_code,birth_day)" +
-                    "values (null,?,?,?,?,?) where id = ?");
+                    "values (null,?,?,?,?,?) ");
             ps.setString(1,user.getName());
             ps.setString(2,user.getFamily());
             ps.setInt(3,user.getAge());
             ps.setString(4,user.getNationalCode());
             ps.setObject(5,user.getBirthday());
-            ps.setInt(6,user.getId());
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,6 +103,44 @@ public class UserDao implements DAO<User>,DAOReadNationalCode<User>{
         try {
             PreparedStatement ps = database.prepareStatement("delete from users where id=?");
             ps.setInt(1,user.getId());
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            Database.close();
+        }
+    }
+
+    @Override
+    public Optional<User> getById(Integer id) {
+        User user = null;
+        try {
+            PreparedStatement ps = database.prepareStatement("select * from users where account_id = ?");
+            ps.setInt(1,id);
+            ResultSet output =ps.executeQuery();
+            if (output.first()){
+                user = new User(output.getInt("id"),output.getString("name"),
+                        output.getString("family"),output.getString("national_code"),
+                        output.getObject("birth_day", LocalDate.class));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            return Optional.of(user);
+        }
+    }
+
+    public void save(User user, int id) {
+        try {
+            PreparedStatement ps = database.prepareStatement("insert  into users(id,name,family,age,national_code," +
+                    "birth_day,account_id)" +
+                    "values (null,?,?,?,?,?,?)");
+            ps.setString(1,user.getName());
+            ps.setString(2,user.getFamily());
+            ps.setInt(3,user.getAge());
+            ps.setString(4,user.getNationalCode());
+            ps.setObject(5,user.getBirthday());
+            ps.setInt(6,id);
             ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
